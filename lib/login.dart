@@ -34,8 +34,19 @@ class _LoginPageState extends State<MyHomePage> {
 
   PersonData person = new PersonData();
 
-  void showInSnackBar(String value) {
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text(value)));
+  void showInfoSnackBar(String value) {
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+        content: new Text(value), backgroundColor: Colors.blueGrey));
+  }
+
+  void showWarnSnackBar(String value) {
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+        content: new Text(value), backgroundColor: Colors.orange));
+  }
+
+  void showSuccessSnackBar(String value) {
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+        content: new Text(value), backgroundColor: Colors.green));
   }
 
   @override
@@ -61,16 +72,40 @@ class _LoginPageState extends State<MyHomePage> {
   void _handleLogin() {
     final FormState form = _formKey.currentState;
     form.save();
-    showInSnackBar('登录中...');
-  }
-  void _handleSendCode() {
-    showInSnackBar('验证码已发送');
-    String url = Api.CLIENT_CONFIG;
+    if (person.code.length != 6) {
+      showWarnSnackBar('请输入正确的验证码~');
+      return;
+    }
+    print("phone=" + person.phoneNumber + ",code=" + person.code);
+    showInfoSnackBar('登录中...');
+    String url = Api.LOGIN;
     NetUtils.post(url).then((data) {
       if (data != null) {
-        print(data);
         Map<String, dynamic> map = json.decode(data);
-        print(map);
+        if (map['code'] == 0) {
+          var dataMap = map['data'];
+          DataUtils.saveLoginInfo(dataMap);
+          showSuccessSnackBar('登录成功~');
+        }
+      }
+    });
+  }
+
+  void _handleSendCode() {
+    final FormState form = _formKey.currentState;
+    form.save();
+    if (person.phoneNumber.length != 11) {
+      showWarnSnackBar('请输入正确的手机号~');
+      return;
+    }
+    String url = Api.SMS_END;
+    NetUtils.post(url).then((data) {
+      if (data != null) {
+        Map<String, dynamic> map = json.decode(data);
+        if (map['code'] == 0) {
+          print(map);
+          showSuccessSnackBar('验证码已发送~');
+        }
       }
     });
   }
@@ -120,6 +155,8 @@ class _LoginPageState extends State<MyHomePage> {
                                 keyboardType: TextInputType.phone,
                                 onSaved: (String value) {
                                   person.phoneNumber = value;
+                                  print("=========>"+value);
+                                  print(person.phoneNumber);
                                 },
                               ),
                             ],

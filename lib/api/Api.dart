@@ -3,4 +3,6 @@ class Api {
 
   // 初始化项目
   static final String CLIENT_CONFIG = BASE_URL + "/client/config";
+  static final String SMS_END = BASE_URL + "/deploy/sms/send";
+  static final String LOGIN = BASE_URL + "/deploy/login";
 }

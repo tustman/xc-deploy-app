@@ -15,10 +15,9 @@ class DataUtils {
     if (data != null) {
       SharedPreferences sp = await SharedPreferences.getInstance();
       String accessToken = data[TOKEN];
-      String udid = data[UDID];
       await sp.setString(TOKEN, accessToken);
-      await sp.setString(UDID, udid);
       await sp.setBool(IS_LOGIN, true);
+      print("============>LoginInfo保存成功");
     }
   }
 
