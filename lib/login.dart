@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'api/Api.dart';
+import 'util/NetUtils.dart';
+import 'util/DataUtils.dart';
+import 'dart:convert';
 
 void main() => runApp(new MyApp());
 
@@ -13,6 +17,7 @@ class MyApp extends StatelessWidget {
       home: new MyHomePage(title: '登录页'),
     );
   }
+
 }
 
 class MyHomePage extends StatefulWidget {
@@ -33,10 +38,41 @@ class _LoginPageState extends State<MyHomePage> {
     _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text(value)));
   }
 
-  void _handleSubmitted() {
+  @override
+  void initState() {
+    super.initState();
+    initConfig();
+  }
+
+  void initConfig() {
+    print("===================>初始化...");
+    String url = Api.CLIENT_CONFIG;
+    NetUtils.post(url).then((data) {
+      if (data != null) {
+        Map<String, dynamic> map = json.decode(data);
+        if (map['code'] == 0) {
+          var data = map['data'];
+          print(data);
+          DataUtils.saveClientInfo(data);
+        }
+      }
+    });
+  }
+  void _handleLogin() {
     final FormState form = _formKey.currentState;
     form.save();
-    showInSnackBar('phone number is ${person.phoneNumber}, code is ${person.code}');
+    showInSnackBar('登录中...');
+  }
+  void _handleSendCode() {
+    showInSnackBar('验证码已发送');
+    String url = Api.CLIENT_CONFIG;
+    NetUtils.post(url).then((data) {
+      if (data != null) {
+        print(data);
+        Map<String, dynamic> map = json.decode(data);
+        print(map);
+      }
+    });
   }
 
   @override
@@ -128,7 +164,7 @@ class _LoginPageState extends State<MyHomePage> {
                             child:
                             new Text('获取验证码',
                                 style: new TextStyle(color: Colors.white)),
-                            onPressed: () {},
+                            onPressed: _handleSendCode,
                           ),
                         ),
                       ],
@@ -147,7 +183,7 @@ class _LoginPageState extends State<MyHomePage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      onPressed: _handleSubmitted,
+                      onPressed: _handleLogin,
                     ),
                   ),
                 ],
