@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           new Container(
             padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
             child: new RaisedButton(
-              color: Colors.blueGrey,
+              color: Colors.blue,
               child:
                   new Text('发送验证码', style: new TextStyle(color: Colors.white)),
               onPressed: () {},
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: new RaisedButton(
         padding: const EdgeInsets.all(10.0),
-        color: Colors.blueGrey,
+        color: Colors.blue,
         child: new Text(
           '登录',
           style: new TextStyle(

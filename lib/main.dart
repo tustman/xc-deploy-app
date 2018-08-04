@@ -43,7 +43,7 @@ class _DeployClientState extends State<DeployClient> {
     print("========================>========>");
     return new MaterialApp(
       theme: new ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blue,
       ),
       home: finalWidget,
     );

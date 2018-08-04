@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
 
   void showInfoSnackBar(String value) {
     _scaffoldKey.currentState.showSnackBar(new SnackBar(
-        content: new Text(value), backgroundColor: Colors.blueGrey));
+        content: new Text(value), backgroundColor: Colors.blue));
   }
 
   void showWarnSnackBar(String value) {
@@ -185,7 +185,7 @@ class _LoginState extends State<Login> {
                           padding:
                               const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                           child: new RaisedButton(
-                            color: Colors.blueGrey,
+                            color: Colors.blue,
                             child: new Text('获取验证码',
                                 style: new TextStyle(color: Colors.white)),
                             onPressed: _handleSendCode,
@@ -198,7 +198,7 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.all(20.0),
                     child: new RaisedButton(
                       padding: const EdgeInsets.all(10.0),
-                      color: Colors.blueGrey,
+                      color: Colors.blue,
                       child: new Text(
                         '登录',
                         style: new TextStyle(
