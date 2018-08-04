@@ -5,8 +5,9 @@ import 'api/Api.dart';
 import 'util/NetUtils.dart';
 import 'util/DataUtils.dart';
 import 'dart:convert';
-import 'page/WorkOrderList.dart';
-import 'page/Login.dart';
+import 'page/work_order_list.dart';
+import 'page/tabs_demo.dart';
+import 'page/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,7 +29,7 @@ class _DeployClientState extends State<DeployClient> {
     DataUtils.isLogin().then((isLogin) {
       if (isLogin) {
         setState(() {
-          finalWidget = new WorkOrderList();
+          finalWidget = new TabsDemo();
         });
       } else {
         setState(() {
