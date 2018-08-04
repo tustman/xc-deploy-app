@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
-import 'api/Api.dart';
-import 'util/NetUtils.dart';
-import 'util/DataUtils.dart';
+import '../api/Api.dart';
+import '../util/NetUtils.dart';
+import '../util/DataUtils.dart';
 import 'dart:convert';
+import '../page/WorkOrderList.dart';
 
-void main() => runApp(new MyApp());
-
-class MyApp extends StatelessWidget {
+class Login extends StatefulWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: new MyHomePage(title: '登录页'),
-    );
+  State<StatefulWidget> createState() {
+    return new _LoginState();
   }
-
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _LoginPageState createState() => new _LoginPageState();
-}
-
-class _LoginPageState extends State<MyHomePage> {
+class _LoginState extends State<Login> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
@@ -40,13 +25,13 @@ class _LoginPageState extends State<MyHomePage> {
   }
 
   void showWarnSnackBar(String value) {
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-        content: new Text(value), backgroundColor: Colors.orange));
+    _scaffoldKey.currentState.showSnackBar(
+        new SnackBar(content: new Text(value), backgroundColor: Colors.orange));
   }
 
   void showSuccessSnackBar(String value) {
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-        content: new Text(value), backgroundColor: Colors.green));
+    _scaffoldKey.currentState.showSnackBar(
+        new SnackBar(content: new Text(value), backgroundColor: Colors.green));
   }
 
   @override
@@ -56,7 +41,7 @@ class _LoginPageState extends State<MyHomePage> {
   }
 
   void initConfig() {
-    print("===================>初始化...");
+    print("===================>初始化client...");
     String url = Api.CLIENT_CONFIG;
     NetUtils.post(url).then((data) {
       if (data != null) {
@@ -69,6 +54,7 @@ class _LoginPageState extends State<MyHomePage> {
       }
     });
   }
+
   void _handleLogin() {
     final FormState form = _formKey.currentState;
     form.save();
@@ -86,6 +72,9 @@ class _LoginPageState extends State<MyHomePage> {
           var dataMap = map['data'];
           DataUtils.saveLoginInfo(dataMap);
           showSuccessSnackBar('登录成功~');
+          Navigator.of(context).push(new MaterialPageRoute(
+                builder: (ctx) => new WorkOrderList(),
+              ));
         }
       }
     });
@@ -144,8 +133,8 @@ class _LoginPageState extends State<MyHomePage> {
                             children: [
                               new TextFormField(
                                 decoration: new InputDecoration(
-                                  contentPadding:
-                                  EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0)),
                                   filled: true,
@@ -155,7 +144,7 @@ class _LoginPageState extends State<MyHomePage> {
                                 keyboardType: TextInputType.phone,
                                 onSaved: (String value) {
                                   person.phoneNumber = value;
-                                  print("=========>"+value);
+                                  print("=========>" + value);
                                   print(person.phoneNumber);
                                 },
                               ),
@@ -176,11 +165,10 @@ class _LoginPageState extends State<MyHomePage> {
                             children: [
                               new TextFormField(
                                 decoration: new InputDecoration(
-                                  contentPadding:
-                                  EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          5.0)),
+                                      borderRadius: BorderRadius.circular(5.0)),
                                   filled: true,
                                   hintText: '验证码',
                                   icon: new Icon(Icons.sms),
@@ -194,12 +182,11 @@ class _LoginPageState extends State<MyHomePage> {
                           ),
                         ),
                         new Container(
-                          padding: const EdgeInsets.fromLTRB(
-                              10.0, 0.0, 0.0, 0.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                           child: new RaisedButton(
                             color: Colors.blueGrey,
-                            child:
-                            new Text('获取验证码',
+                            child: new Text('获取验证码',
                                 style: new TextStyle(color: Colors.white)),
                             onPressed: _handleSendCode,
                           ),
