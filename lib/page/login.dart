@@ -4,6 +4,7 @@ import '../util/NetUtils.dart';
 import '../util/DataUtils.dart';
 import 'dart:convert';
 import '../page/work_order_list.dart';
+import '../page/tabs_demo.dart';
 
 class Login extends StatefulWidget {
   // This widget is the root of your application.
@@ -73,7 +74,7 @@ class _LoginState extends State<Login> {
           DataUtils.saveLoginInfo(dataMap);
           showSuccessSnackBar('登录成功~');
           Navigator.of(context).push(new MaterialPageRoute(
-                builder: (ctx) => new WorkOrderList(),
+                builder: (ctx) => new TabsDemo(),
               ));
         }
       }
