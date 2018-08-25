@@ -44,7 +44,8 @@ class FlutterReduxApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// 通过 StoreProvider 应用 store
-    return new StoreProvider(
+    return new
+    StoreProvider(
       store: store,
       child: new StoreBuilder<GSYState>(builder: (context, store) {
         return new MaterialApp(

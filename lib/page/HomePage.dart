@@ -5,9 +5,10 @@ import 'package:xc_deploy_app/common/localization/DefaultLocalizations.dart';
 import 'package:xc_deploy_app/common/style/GSYStyle.dart';
 import 'package:xc_deploy_app/common/utils/CommonUtils.dart';
 import 'package:xc_deploy_app/common/utils/NavigatorUtils.dart';
-//import 'package:xc_deploy_app/page/DynamicPage.dart';
-//import 'package:xc_deploy_app/page/MyPage.dart';
-//import 'package:xc_deploy_app/page/TrendPage.dart';
+
+import 'package:xc_deploy_app/page/DynamicPage.dart';
+import 'package:xc_deploy_app/page/MyPage.dart';
+import 'package:xc_deploy_app/page/TrendPage.dart';
 import 'package:xc_deploy_app/widget/GSYTabBarWidget.dart';
 import 'package:xc_deploy_app/widget/GSYTitleBar.dart';
 import 'package:xc_deploy_app/widget/HomeDrawer.dart';
@@ -65,9 +66,9 @@ class HomePage extends StatelessWidget {
         type: GSYTabBarWidget.BOTTOM_TAB,
         tabItems: tabs,
         tabViews: [
-//          new DynamicPage(),
-//          new TrendPage(),
-//          new MyPage(),
+          new DynamicPage(),
+          new TrendPage(),
+          new MyPage(),
         ],
         backgroundColor: GSYColors.primarySwatch,
         indicatorColor: Color(GSYColors.white),

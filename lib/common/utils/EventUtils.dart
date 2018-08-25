@@ -123,6 +123,8 @@ class EventUtils {
 
   ///跳转
   static ActionUtils(BuildContext context, Event event, currentRepository) {
+    print("================>event.repo " + event.repo.toString());
+    print("================>event.type " + event.type);
     if (event.repo == null) {
       NavigatorUtils.goPerson(context, event.actor.login);
       return;
@@ -130,6 +132,8 @@ class EventUtils {
     String owner = event.repo.name.split("/")[0];
     String repositoryName = event.repo.name.split("/")[1];
     String fullName = owner + '/' + repositoryName;
+    print("================>fullName " + fullName);
+    print("================>currentRepository " + currentRepository);
     switch (event.type) {
       case 'ForkEvent':
         String forkName = event.actor.login + "/" + repositoryName;
@@ -168,6 +172,8 @@ class EventUtils {
         if (fullName.toLowerCase() == currentRepository.toLowerCase()) {
           return;
         }
+        print("================>owner " + owner);
+        print("================>repositoryName " + repositoryName);
         NavigatorUtils.goReposDetail(context, owner, repositoryName);
         break;
     }
